@@ -1,5 +1,13 @@
 # wiim-piremote
-Python wrapper to send http commands to WIIM device via IR remote
+Python script to send http commands to WIIM device via IR remote and lirc
+
+## Hardware needed
+
+- Raspberry pi zero 2W
+- TSOP4838 IR-receiver 38 kHz e.g.  https://www.electrokit.com/tsop4838-ir-modul-38-khz
+
+This would probably work with any raspberry pi that has a network interface.
+It is very convenient using a zero w with wifi, just a power cable needed.
 
 ## How to get started (basic overview)
 
@@ -15,8 +23,11 @@ Python wrapper to send http commands to WIIM device via IR remote
 - Download a lircd.conf for your remote at https://sourceforge.net/p/lirc-remotes/code/ci/master/tree/remotes/
   - Put this file in /etc/lirc
 - Edit lirc_options.conf and set:
-  - driver = default
-  - device = /dev/lirc0
+
+```
+  driver = default
+  device = /dev/lirc0
+```
 
 ### Run the python script and check output for commands from the remote (uncomment print(command) in remote.py)
 

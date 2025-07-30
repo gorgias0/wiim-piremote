@@ -1,0 +1,11 @@
+[Unit]
+ Description=Script for reading ir input and sending commands to wiim
+
+[Service]
+ User=remote
+ WorkingDirectory=/home/remote
+ ExecStart=/home/remote/pylirc/bin/python3 /home/remote/remote.py
+ Restart=always
+
+[Install]
+ WantedBy=multi-user.target

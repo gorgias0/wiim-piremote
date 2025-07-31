@@ -11,9 +11,10 @@ It is very convenient using a zero w with wifi, just a power cable needed.
 
 ## How to get started (basic overview)
 
+- Connect the ir-receiver to pin 01, 06 and 08 i.e 3.3V, ground and gpio14
 - Install lirc `apt install lirc`
 - Install python3 if needed `apt install python3`
-- Create a venv for the python project and install lirc and requests (perhaps not needed)
+- Create a venv for the python project and install lirc and requests (venv perhaps not needed)
 - Install lirc for python `pip3 install lirc`
 - Install requests for python `pip3 install requests`
 

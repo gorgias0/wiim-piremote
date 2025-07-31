@@ -16,32 +16,30 @@ def ProcessIRRemote():
     except:
         keypress=""
 
-    if (keypress != "" and keypress != None):
+    if keypress != "" and keypress != None:
 
         data = keypress.split()
         sequence = data[1]
         command = data[2]
 
         #ignore command repeats
-        if (sequence != "00"):
+        if sequence != "00":
            return
 
         # uncomment to see what commands your remote sends
         # print(command) 
 
-        if (command == "KEY_DOWN"):
+        if command == "KEY_DOWN":
             send("setPlayerCmd:vol--")
-        if (command == "KEY_UP"):
+        elif command == "KEY_UP":
             send("setPlayerCmd:vol%2b%2b")
-        if (command == "KEY_LEFT"):
+        elif command == "KEY_LEFT":
             send("setPlayerCmd:prev")
-        if (command == "KEY_RIGHT"):
+        elif command == "KEY_RIGHT":
             send("setPlayerCmd:next")
-        if (command == "KEY_ENTER"):
+        elif command == "KEY_ENTER":
             send("setPlayerCmd:onepause")
 
-#define Global
-client = lirc.Client()
 conn = lirc.LircdConnection()
 conn.connect()
 print("Listening...")

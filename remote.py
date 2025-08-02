@@ -1,5 +1,7 @@
 import lirc # type: ignore
 import requests # type: ignore
+from requests.packages.urllib3.exceptions import InsecureRequestWarning # type: ignore
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 # ip of the wiim device on local network
 BASE_URL="https://192.168.0.241/httpapi.asp?command="
@@ -39,6 +41,10 @@ def ProcessIRRemote():
             send("setPlayerCmd:next")
         elif command == "KEY_ENTER":
             send("setPlayerCmd:onepause")
+        elif command == "KEY_NEXT":
+            send("setPlayerCmd:seek:15") # not supported...
+        elif command == "KEY_PREVIOUS":
+            send("setPlayerCmd:seek:-15") # not supported...
 
 conn = lirc.LircdConnection()
 conn.connect()

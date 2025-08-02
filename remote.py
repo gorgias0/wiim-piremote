@@ -7,7 +7,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 BASE_URL="https://192.168.0.241/httpapi.asp?command="
 
 def send(command):
-    requests.get(BASE_URL + command, verify=False) # ignore SSL warnings
+    return requests.get(BASE_URL + command, verify=False) # ignore SSL warnings
 
 def ProcessIRRemote():
 
@@ -42,9 +42,21 @@ def ProcessIRRemote():
         elif command == "KEY_ENTER":
             send("setPlayerCmd:onepause")
         elif command == "KEY_NEXT":
-            send("setPlayerCmd:seek:15") # not supported...
+            status = send("getPlayerStatus").json()
+            if status == None or status['status'] != 'play': return # dont seek if not playing
+            curpos = int(status['curpos'])
+            totlen = int(status['totlen'])
+            seekpos = int(curpos + 15 * 1000)
+            if seekpos >= totlen - 1000: return # dont seek past the end
+            seekpos = int(seekpos / 1000)
+            send("setPlayerCmd:seek:" + str(seekpos)) # forward 15 sec
         elif command == "KEY_PREVIOUS":
-            send("setPlayerCmd:seek:-15") # not supported...
+            status = send("getPlayerStatus").json()
+            if status == None or status['status'] != 'play': return # dont seek if not playing
+            curpos = int(status['curpos'])
+            seekpos = int((curpos - 15 * 1000) / 1000)
+            if seekpos < 0: seekpos = 0
+            send("setPlayerCmd:seek:" + str(seekpos)) # back 15 sec
 
 conn = lirc.LircdConnection()
 conn.connect()
